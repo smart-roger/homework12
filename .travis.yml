@@ -2,8 +2,8 @@
 compiler: clang
 before script:  
   - sudo apt-get install libboost-asio-dev -y
-  - sudo apt-get install libboost-system-dev -y
-  - sudo apt-get install libboost-thread-dev -y
+  - echo "deb http://archive.ubuntu.com/ubuntu xenial main universe" | sudo tee -a /etc/apt/sources.list
+  - sudo apt-get update -qq
 script:
 - cmake .
 - cmake --build .
