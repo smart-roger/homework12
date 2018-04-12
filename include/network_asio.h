@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <string>
+#include <list>
 #include <boost/asio.hpp>
 
 #include "TConsole.h"
