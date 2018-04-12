@@ -1,7 +1,7 @@
 ﻿language: cpp
 compiler: clang
 before_script:  
-  - sudo apt-get install libboost-asio-dev -y
+  - sudo apt-get install libboost-all-dev -y
   - echo "deb http://archive.ubuntu.com/ubuntu xenial main universe" | sudo tee -a /etc/apt/sources.list
   - sudo apt-get update -qq
 script:
