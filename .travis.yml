@@ -1,6 +1,7 @@
 ﻿language: cpp
 compiler: clang
-
+before script:  
+  - sudo apt-get install libboost-asio-dev -y
 script:
 - cmake .
 - cmake --build .
