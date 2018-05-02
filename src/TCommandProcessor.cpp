@@ -28,7 +28,7 @@ void TCommandProcessor::newCommand(const std::string& newCommand){
 }
 
 void TCommandProcessor::startBlock(){
-    if(0==_blockCounter && 0<_store.size()){
+    if(0==_blockCounter && !_store.empty()){
         _store.printCommands();
         logBlock();
         _store.clear();
