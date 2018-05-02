@@ -14,7 +14,7 @@ TCommandProcessor::~TCommandProcessor()
     //Если окончен ввод - надо вывести накопленные команды
     if(!_store.empty()){
         _store.printCommands();
-        void logBlock();
+        logBlock();
         _store.clear();
     }
 }
@@ -49,13 +49,13 @@ void TCommandProcessor::handleCommand(const std::string& command){
             _store.printCommands(std::cout);
             logBlock();
             _store.clear();
-    }
+        }
     //  Блоки обрабатываются в другом наблюдателе.
     //  else{}
 
 }
 
 void TCommandProcessor::logBlock(){
-    std::ofstream fileLog("bulk"+std::to_string(_timeStart)+".log");
+    std::ofstream fileLog("bulk"+std::to_string(_timeStart)+std::to_string(rand())+".log");
     _store.printCommands(fileLog);
 }
