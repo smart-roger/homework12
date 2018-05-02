@@ -60,7 +60,7 @@ void TCommandProcessor::handleCommand(const std::string& command){
 }
 
 void TCommandProcessor::logBlock(){
-    if(!_commands.empty()){
+    if(!_store.empty()){
         std::ofstream fileLog("bulk_"+std::to_string(_timeStart)+"_"+std::to_string(rand())+".log");
         _store.printCommands(fileLog);
     }
