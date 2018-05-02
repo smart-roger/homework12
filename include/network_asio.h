@@ -3,7 +3,7 @@
 
 #include <iostream>
 #include <string>
-#include <list>
+#include <set>
 #include <boost/asio.hpp>
 
 #include "TConsole.h"
@@ -17,7 +17,7 @@ namespace network{
       : public std::enable_shared_from_this<session>
     {
     public:
-      session(ip::tcp::socket socket, std::vector<session>& container, TConsolePtr console)
+      session(ip::tcp::socket socket, std::set<std::shared_ptr<session>>& container, TConsolePtr console)
         : _socket(std::move(socket)),
             _symbol(0),
             _read_line(""),
@@ -71,7 +71,11 @@ namespace network{
               }
               else
               {
-                //_container.erase(self);
+
+                _container.erase(self);
+                _socket.close();
+                if ( _container.empty())
+                    _console->flush();
               }
             });
       }
@@ -79,7 +83,7 @@ namespace network{
       ip::tcp::socket _socket;
       char _symbol;
       std::string _read_line;
-      std::vector<session>& _container;
+      std::set<std::shared_ptr<session>>& _container;
 
       TConsolePtr   _console;
 
@@ -87,7 +91,7 @@ namespace network{
       TBlockProcessor _processor;
     };
 
-    using containerConnections = std::list<std::shared_ptr<session>>;
+    using containerConnections = std::set<std::shared_ptr<session>>;
 
     class server
     {
@@ -109,16 +113,18 @@ namespace network{
         acceptor_.async_accept(socket_,
             [this](boost::system::error_code ec)
             {
-              if (!ec)
-                std::make_shared<session>(std::move(socket_), clients, _console)->start();
-
+              if (!ec){
+                auto session_new = std::make_shared<session>(std::move(socket_), clients, _console);
+                clients.insert(session_new);
+                session_new->start();
+              }
               do_accept();
             });
       }
 
       ip::tcp::acceptor acceptor_;
       ip::tcp::socket socket_;
-      std::vector<session> clients;
+      std::set<std::shared_ptr<session>> clients;
       TConsolePtr _console;
     };
 }

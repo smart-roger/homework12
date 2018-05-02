@@ -14,3 +14,7 @@ void TConsole::commonInput(std::string line){
         std::lock_guard<std::mutex> lock(_mutex);
         _processor.newCommand(line);
 }
+
+void TConsole::flush(){
+    _processor.flush();
+}

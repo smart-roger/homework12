@@ -11,6 +11,10 @@ TCommandProcessor::TCommandProcessor(size_t bulkSize):
 
 TCommandProcessor::~TCommandProcessor()
 {
+    flush();
+}
+
+void TCommandProcessor::flush(){
     //Если окончен ввод - надо вывести накопленные команды
     if(!_store.empty()){
         _store.printCommands();

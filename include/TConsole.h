@@ -21,6 +21,7 @@ class TConsole
         virtual ~TConsole();
 
         void commonInput(std::string);
+        void flush();
 
     protected:
 
