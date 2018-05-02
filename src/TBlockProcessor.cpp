@@ -42,6 +42,8 @@ void TBlockProcessor::handleCommand(const std::string& command){
 }
 
 void TBlockProcessor::logBlock(){
-    std::ofstream fileLog("bulk_"+std::to_string(_timeStart)+"_"+std::to_string(rand())+".log");
-    _store.printCommands(fileLog);
+    if(!_commands.empty()){
+        std::ofstream fileLog("bulk_"+std::to_string(_timeStart)+"_"+std::to_string(rand())+".log");
+        _store.printCommands(fileLog);
+    }
 }
